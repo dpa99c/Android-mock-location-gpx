@@ -46,8 +46,13 @@ class MainActivity : AppCompatActivity() {
     var mockRoute = MockRoute()
     lateinit var timeMultiplerSpinner: Spinner
 
+    companion object {
+        lateinit  var appContext: Context
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appContext = applicationContext
         setContentView(R.layout.activity_main)
         enableMockLocation.setOnClickListener {
             startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS))

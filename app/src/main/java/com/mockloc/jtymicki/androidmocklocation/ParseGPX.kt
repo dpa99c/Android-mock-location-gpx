@@ -1,6 +1,10 @@
 package com.mockloc.jtymicki.androidmocklocation
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.DialogFragment
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.text.SimpleDateFormat
@@ -12,6 +16,25 @@ class ParseGPX {
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     var previousPointTimeStamp: Long = 0
 
+/*    class ErrorDialogFragment(message: String) : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(message))
+                .setPositiveButton("OK") { _,_ -> }
+                .create()
+
+        companion object {
+            const val TAG = "ErrorDialog"
+        }
+    }*/
+
+    fun showErrorDialog(errorMessage: String){
+        AlertDialog.Builder(MainActivity.appContext)
+            .setTitle("Error")
+            .setMessage(errorMessage)
+            .setPositiveButton("OK") { _,_ -> }
+            .show()
+    }
 
     fun parse(xmlData: String): Boolean {
         var status = true
@@ -66,6 +89,7 @@ class ParseGPX {
         }
         catch (e: Exception) {
             Log.e(TAG, e.toString())
+            showErrorDialog("Failed to parse GPX: $e")
             status = false
         }
         return status
