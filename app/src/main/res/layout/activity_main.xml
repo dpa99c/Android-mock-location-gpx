@@ -31,6 +31,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/runGPXMockLocations" />
 
+    <Button
+        android:id="@+id/pauseGPXMockLocations"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/pause_gpx_mock_locations_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clearGPXMockLocations" />
+
+    <Button
+        android:id="@+id/resumeGPXMockLocations"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/resume_gpx_mock_locations_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clearGPXMockLocations" />
+
     <Spinner
         android:id="@+id/timeMultiplerSpinner"
         android:layout_width="wrap_content"

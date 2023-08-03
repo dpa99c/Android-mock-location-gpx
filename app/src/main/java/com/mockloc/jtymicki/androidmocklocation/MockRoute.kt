@@ -20,6 +20,7 @@ private const val MIN_UPDATE_INTERVAL_MS = 500
 
 class MockRoute {
     var timeFactor = 1
+    var paused = false
 
     private var lastLocationTimeMs: Long = -1
     private lateinit var handler: Handler
@@ -36,6 +37,13 @@ class MockRoute {
 
     @SuppressLint("MissingPermission")
     fun nextPoint(){
+        if(paused){
+            // recurse until unpaused
+            handler.postDelayed({
+                nextPoint()
+            }, MIN_UPDATE_INTERVAL_MS.toLong())
+            return;
+        }
         if(parseGPX.items.count() > 0){
             val item = parseGPX.items.removeFirst()
 

@@ -63,7 +63,17 @@ class MainActivity : AppCompatActivity() {
         clearGPXMockLocations.setOnClickListener {
             clearGPXMockLocations()
         }
+        pauseGPXMockLocations.setOnClickListener {
+            pauseGPXMockLocations()
+        }
+        resumeGPXMockLocations.setOnClickListener {
+            resumeGPXMockLocations()
+        }
+
         clearGPXMockLocations.visibility = View.GONE
+        pauseGPXMockLocations.visibility = View.GONE
+        resumeGPXMockLocations.visibility = View.GONE
+
 
         timeMultiplerSpinner = findViewById<Spinner>(R.id.timeMultiplerSpinner)
         val items = arrayOf("x1", "x2", "x5", "x10", "x25", "x100")
@@ -178,6 +188,20 @@ class MainActivity : AppCompatActivity() {
         mockRoute.clearRoute()
         runGPXMockLocations.visibility = View.VISIBLE
         clearGPXMockLocations.visibility = View.GONE
+        pauseGPXMockLocations.visibility = View.GONE
+        resumeGPXMockLocations.visibility = View.GONE
+    }
+
+    private fun pauseGPXMockLocations() {
+        pauseGPXMockLocations.visibility = View.GONE
+        resumeGPXMockLocations.visibility = View.VISIBLE
+        mockRoute.paused = true
+    }
+
+    private fun resumeGPXMockLocations() {
+        pauseGPXMockLocations.visibility = View.VISIBLE
+        resumeGPXMockLocations.visibility = View.GONE
+        mockRoute.paused = false
     }
 
     private fun handleMockLocationAccess() {
@@ -231,6 +255,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDocument(documentUri: Uri) {
         runGPXMockLocations.visibility = View.GONE
         clearGPXMockLocations.visibility = View.VISIBLE
+        pauseGPXMockLocations.visibility = View.VISIBLE
         mockRoute.pushMockRoute(this, documentUri)
     }
 
