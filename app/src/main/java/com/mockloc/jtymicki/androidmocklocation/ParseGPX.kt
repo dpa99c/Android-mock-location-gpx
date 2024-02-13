@@ -8,12 +8,15 @@ import androidx.fragment.app.DialogFragment
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.text.SimpleDateFormat
+import java.util.Date
 
 private const val TAG = "ParseGPX"
 
 class ParseGPX {
     val items = ArrayList<TrackingPoint>()
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'")
+    private val dateFormatWithMillis = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'")
+
     var previousPointTimeStamp: Long = 0
 
 /*    class ErrorDialogFragment(message: String) : DialogFragment() {
@@ -57,7 +60,7 @@ class ParseGPX {
                             currentRecord.lon = xpp.getAttributeValue(null, "lon").toDouble()
                         }
                     }
-                    XmlPullParser.TEXT -> textValue = xpp.text
+                    XmlPullParser.TEXT -> textValue = xpp.text.trim()
                     XmlPullParser.END_TAG -> {
                         if (inItem) {
                             when (tagName) {
@@ -66,11 +69,17 @@ class ParseGPX {
                                     inItem = false
                                     currentRecord = TrackingPoint()
                                 }
-                                "ele" -> currentRecord.altitude = textValue.toDouble()
-                                "accuracy" -> currentRecord.accuracy = textValue.toFloat()
-                                "speed" -> currentRecord.speed = textValue.toFloat()
+                                "ele" -> currentRecord.altitude = if (textValue.isEmpty()) 0.0 else textValue.toDouble()
+                                "accuracy" -> currentRecord.accuracy = if (textValue.isEmpty()) 0.0f else textValue.toFloat()
+                                "speed" -> currentRecord.speed = if (textValue.isEmpty()) 0.0f else textValue.toFloat()
                                 "time" -> {
-                                    val time = dateFormat.parse(textValue)
+                                    val time = if(textValue.isEmpty())
+                                        Date();
+                                    else if(textValue.length == 20)
+                                        dateFormat.parse(textValue)
+                                    else
+                                        dateFormatWithMillis.parse(textValue)
+
 //                                    Log.i(TAG, time.toString())
                                     currentRecord.timestamp = time.time
                                     if (items.size == 0) {
