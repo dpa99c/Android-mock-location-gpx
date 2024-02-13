@@ -44,6 +44,8 @@
             <trkpt lat="52.22907430" lon="20.97158070">
                 <ele>120.00000</ele>
                 <time>2010-01-01T00:00:00.000Z</time>
+                <speed>0.61</speed>
+                <accuracy>4.80</accuracy>
             </trkpt>
             <trkpt lat="52.22909000" lon="20.97157000">
                 <ele>121.00000</ele>
