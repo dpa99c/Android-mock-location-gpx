@@ -70,24 +70,44 @@ class ParseGPX {
                                     currentRecord = TrackingPoint()
                                 }
                                 "ele" -> currentRecord.altitude = if (textValue.isEmpty()) 0.0 else textValue.toDouble()
-                                "accuracy" -> currentRecord.accuracy = if (textValue.isEmpty()) 0.0f else textValue.toFloat()
-                                "speed" -> currentRecord.speed = if (textValue.isEmpty()) 0.0f else textValue.toFloat()
+                                "accuracy" -> currentRecord.accuracy = if (textValue.isEmpty() || textValue.toFloat() < 0) 0.0f else textValue.toFloat()
+                                "speed" -> currentRecord.speed = if (textValue.isEmpty() || textValue.toFloat() < 0) 0.0f else textValue.toFloat()
                                 "time" -> {
                                     val time = if(textValue.isEmpty())
-                                        Date();
+                                        null
                                     else if(textValue.length == 20)
-                                        dateFormat.parse(textValue)
+                                        try{
+                                            dateFormat.parse(textValue)
+                                        }catch (e: Exception){
+                                            Log.e(TAG, "Failed to parse date: $textValue: $e")
+                                            null
+                                        }
                                     else
-                                        dateFormatWithMillis.parse(textValue)
-
-//                                    Log.i(TAG, time.toString())
-                                    currentRecord.timestamp = time.time
+                                        try{
+                                            dateFormatWithMillis.parse(textValue)
+                                        }catch (e: Exception){
+                                            Log.e(TAG, "Failed to parse date: $textValue: $e")
+                                            null
+                                        }
+                                    // Use time value
+                                    var timestamp = 0L
+                                    if(time == null){
+                                        if(previousPointTimeStamp != 0L){
+                                            timestamp = previousPointTimeStamp + 1000
+                                        }else{
+                                            timestamp = System.currentTimeMillis()
+                                        }
+                                    }else{
+                                        timestamp = time.time
+                                    }
+                                    // Log.i(TAG, time.toString())
+                                    currentRecord.timestamp = timestamp
                                     if (items.size == 0) {
                                         currentRecord.pointDelay = 0
                                     } else {
-                                        currentRecord.pointDelay = time.time - previousPointTimeStamp
+                                        currentRecord.pointDelay = timestamp - previousPointTimeStamp
                                     }
-                                    previousPointTimeStamp = time.time
+                                    previousPointTimeStamp = timestamp
                                 }
                             }
                         }
