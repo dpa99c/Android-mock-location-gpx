@@ -17,11 +17,12 @@ and optionally:
 
 An example GPX track file can be found here: [`mock_track.gpx`](/mock_track.gpx)
 
-GPX track files must be put on the device here:
+GPX track files must be put on the device in an accessible folder, e.g.:
 ```
 /sdcard/Mocks/
 ```
 
-The app should be granted read external storage and location permissions.
-Mock route can be started from the app UI by tapping on "RUN MOCK ROUTE" and chosing the GPX file via the File Picker UI.
+The app should be granted read external storage and location permissions if requested.
+The app must be set as the Mock Location App in Developer Options.
+Mock route can be started from the app UI by tapping on "RUN MOCK ROUTE" and choosing the GPX file via the File Picker UI.
 Location mocking can be stopped by tapping "CLEAR MOCK ROUTE".
