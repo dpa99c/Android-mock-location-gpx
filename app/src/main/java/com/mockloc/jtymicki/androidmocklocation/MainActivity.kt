@@ -125,6 +125,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkReadExternalStoragePermission(requestIfNotGranted: Boolean = false): Boolean {
+        // On Android 13+ (API 33+), READ_EXTERNAL_STORAGE is deprecated and has no effect.
+        // The app uses ACTION_OPEN_DOCUMENT (Storage Access Framework) to pick GPX files,
+        // which does not require this permission. Treat it as granted on these versions.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Log.i(TAG, "READ_EXTERNAL_STORAGE not required on API 33+")
+            readExternalStoragePermissionStatus.setText(R.string.read_external_storage_permission_not_required)
+            readExternalStoragePermissionStatus.setTextColor(Color.GREEN)
+            return true
+        }
+
         var granted = false
         if (checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "READ_EXTERNAL_STORAGE granted ")

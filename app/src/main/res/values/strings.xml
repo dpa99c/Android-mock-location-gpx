@@ -11,6 +11,7 @@
     <string name="gpx_file_name">/sdcard/Mocks/</string>
     <string name="read_external_storage_permission_not_granted">Read external storage permission denied</string>
     <string name="read_external_storage_permission_granted">Read external storage permission granted</string>
+    <string name="read_external_storage_permission_not_required">Read external storage permission not required</string>
     <string name="access_coarse_location_permission_not_granted">Coarse location permission denied</string>
     <string name="access_coarse_location_permission_granted">Coarse location permission granted</string>
     <string name="access_fine_location_permission_not_granted">Fine location permission denied</string>
